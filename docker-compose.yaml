@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  api:
+    build: ./api
+    container_name: api_c3
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./api:/app
+      - /app/node_modules
+  blogapp:
+    build: ./app/blogApp
+    container_name: app_c2
+    ports:
+      - "4040:4040"
+    volumes:
+      - ./app/blogApp:/app
+      - /app/node_modules
+    stdin_open: true
+# api = service name (services are containers)
+# build = path of the Dockerfile
+# rest u can understand.
+# stdin_open = true means the it will not close defaultly in cmd(opposite of -d)
