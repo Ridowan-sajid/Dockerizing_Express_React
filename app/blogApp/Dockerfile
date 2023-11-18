@@ -4,8 +4,6 @@ WORKDIR /app
 
 COPY package.json .
 
-#RUN chown -R node:node node_modules
-
 RUN npm install
 
 COPY . .

@@ -2,6 +2,7 @@ version: "3.8"
 services:
   api:
     build: ./api
+    image: ridowan/apiapp
     container_name: api_c3
     ports:
       - "4000:4000"
@@ -10,6 +11,7 @@ services:
       - /app/node_modules
   blogapp:
     build: ./app/blogApp
+    image: ridowan/blogapp
     container_name: app_c2
     ports:
       - "4040:4040"
@@ -17,7 +19,20 @@ services:
       - ./app/blogApp:/app
       - /app/node_modules
     stdin_open: true
-# api = service name (services are containers)
-# build = path of the Dockerfile
-# rest u can understand.
-# stdin_open = true means the it will not close defaultly in cmd(opposite of -d)
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    container_name: mongo-container
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
+      MONGO_INITDB_DATABASE: School
+    volumes:
+      - mongo-db:/data/db
+volumes:
+  mongo-db:
