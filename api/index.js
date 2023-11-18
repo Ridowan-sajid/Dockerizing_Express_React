@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 const app = express();
 app.use(cors());
@@ -8,7 +9,7 @@ app.use(express.json());
 
 //Database Connection with Mongose
 mongoose
-  .connect("mongodb://root:Admin12345@mongo:27017/School?authSource=admin")
+  .connect(process.env.URL)
   .then(() => console.log("Connected to mongo"))
   .catch((err) => console.log(err));
 
